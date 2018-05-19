@@ -8,14 +8,16 @@ init:
   - cmd: git config --global core.autocrlf true
 install:
   # Install repo specific stuff here
+  - ps: Install-Product node $env:nodejs_version x64
 before_build:
   # Display .NET Core version
   - cmd: dotnet --version
   # Display minimal restore text
-  - cmd: dotnet restore ./CribbageBot.csproj --verbosity m
+  - cmd: dotnet restore ./CribbageBot/CribbageBot.csproj --verbosity m
+  - cmd: npm install ./CribbageBot
 build_script:
   # output will be in ./src/bin/debug/netcoreapp1.1/publish
-  - cmd: dotnet publish ./CribbageBot.csproj
+  - cmd: dotnet publish ./CribbageBot/CribbageBot.csproj
 after_build:
   # For once the build has completed
 artifacts:
