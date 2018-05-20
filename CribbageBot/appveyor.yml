@@ -11,7 +11,7 @@ install:
   - ps: Install-Product node $env:nodejs_version x64
 build:
 #  - publish_azure:true
-#  - publish_wap_xcopy: true
+  - publish_wap: true
 before_build:
   # Display .NET Core version
   - cmd: dotnet --version
@@ -25,7 +25,7 @@ after_build:
   # For once the build has completed
 artifacts:
  - path: '\CribbageBot\bin\Debug\netcoreapp2.0\publish'
-   name: WebSite
+   name: Website
    type: WebDeployPackage
 clone_depth: 1
 test_script:
@@ -39,3 +39,5 @@ on_finish :
 deploy:
 - provider: Environment
   name: CribbageBotWebDeployENV
+  on:
+    branch: master
