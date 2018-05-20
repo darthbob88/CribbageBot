@@ -24,9 +24,9 @@ build_script:
 after_build:
   # For once the build has completed
 artifacts:
-# - path: '\CribbageBot\CribbageBot\publish'
-#   name: WebSite
-#   type: WebDeployPackage
+ - path: '\CribbageBot\bin\Debug\netcoreapp2.0\publish'
+   name: WebSite
+   type: WebDeployPackage
 clone_depth: 1
 test_script:
   # restore packages for our unit tests
@@ -36,4 +36,6 @@ test_script:
   - cmd: dotnet xunit
 on_finish :
   # any cleanup in here
-deploy: off
+deploy:
+- provider: CribbageBotWebDeployENV
+  name: dwCheckApi-Production
