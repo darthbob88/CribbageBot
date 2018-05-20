@@ -37,5 +37,5 @@ test_script:
 on_finish :
   # any cleanup in here
 deploy:
-- provider: CribbageBotWebDeployENV
-  name: dwCheckApi-Production
+- provider: Environment
+  name: CribbageBotWebDeployENV
