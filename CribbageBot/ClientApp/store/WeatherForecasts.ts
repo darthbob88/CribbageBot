@@ -22,13 +22,18 @@ export interface WeatherForecast {
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 
+enum typeKeys {
+    requestForecast = 'REQUEST_WEATHER_FORECASTS',
+    receiveForecast = 'RECEIVE_WEATHER_FORECASTS'
+}
+
 interface RequestWeatherForecastsAction {
-    type: 'REQUEST_WEATHER_FORECASTS';
+    type: typeKeys.requestForecast;
     startDateIndex: number;
 }
 
 interface ReceiveWeatherForecastsAction {
-    type: 'RECEIVE_WEATHER_FORECASTS';
+    type: typeKeys.receiveForecast;
     startDateIndex: number;
     forecasts: WeatherForecast[];
 }
@@ -45,14 +50,14 @@ export const actionCreators = {
     requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
         if (startDateIndex !== getState().weatherForecasts.startDateIndex) {
-            let fetchTask = fetch(`api/SampleData/WeatherForecasts?startDateIndex=${ startDateIndex }`)
+            let fetchTask = fetch(`api/SampleData/WeatherForecasts?startDateIndex=${startDateIndex}`)
                 .then(response => response.json() as Promise<WeatherForecast[]>)
                 .then(data => {
-                    dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: data });
+                    dispatch({ type: typeKeys.receiveForecast, startDateIndex: startDateIndex, forecasts: data });
                 });
 
             addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
-            dispatch({ type: 'REQUEST_WEATHER_FORECASTS', startDateIndex: startDateIndex });
+            dispatch({ type: typeKeys.requestForecast, startDateIndex: startDateIndex });
         }
     }
 };
@@ -65,13 +70,13 @@ const unloadedState: WeatherForecastsState = { forecasts: [], isLoading: false }
 export const reducer: Reducer<WeatherForecastsState> = (state: WeatherForecastsState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case 'REQUEST_WEATHER_FORECASTS':
+        case typeKeys.requestForecast:
             return {
                 startDateIndex: action.startDateIndex,
                 forecasts: state.forecasts,
                 isLoading: true
             };
-        case 'RECEIVE_WEATHER_FORECASTS':
+        case typeKeys.receiveForecast:
             // Only accept the incoming data if it matches the most recent request. This ensures we correctly
             // handle out-of-order responses.
             if (action.startDateIndex === state.startDateIndex) {
