@@ -20,6 +20,20 @@
     <Content Remove="ClientApp\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClientApp\components\Cribbage.tsx" />
+    <None Remove="ClientApp\components\CribbageBoard.tsx" />
+    <None Remove="ClientApp\components\CribbagePlayArea.tsx" />
+    <None Remove="ClientApp\store\Player.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\Cribbage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\CribbageBoard.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\CribbagePlayArea.tsx" />
+    <TypeScriptCompile Include="ClientApp\store\Player.ts" />
+  </ItemGroup>
+
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
