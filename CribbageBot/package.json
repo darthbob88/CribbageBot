@@ -2,6 +2,9 @@
   "name": "CribbageBot",
   "private": true,
   "version": "0.0.0",
+  "description": "I needed a project, my family wanted a website they could use to play cribbage.",
+  "repository": "github:darthbob88/Cribbagebot",
+  "license": "BSD-3-Clause",
   "devDependencies": {
     "@types/history": "4.6.0",
     "@types/react": "15.0.35",
