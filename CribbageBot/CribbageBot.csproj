@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\Cribbage.test.tsx" />
     <None Remove="ClientApp\components\Cribbage.tsx" />
     <None Remove="ClientApp\components\CribbageBoard.tsx" />
     <None Remove="ClientApp\components\CribbagePlayArea.tsx" />
@@ -28,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\Cribbage.test.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Cribbage.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CribbageBoard.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CribbagePlayArea.tsx" />
