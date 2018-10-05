@@ -5,14 +5,20 @@
 }
 
 export interface Hand {
-    playedCards: { player: Player, card: Card }[]
+    cardsInHand: HandOfCards[];
+    cardsInCrib: HandOfCards[];
+    playedCards: { player: Player, card: Card }[];
+    turnUp: Card;
+    runningTotal: number;
 }
 
+export interface HandOfCards {
+    player: Player;
+    cards: Card[]
+}
 export interface Player {
     id: string;
     score: number;
-    cardsInHand: Card[];
-    cardsInCrib: Card[];
 }
 
 export interface Card {
@@ -28,6 +34,23 @@ export enum Suit {
 }
 
 //// Not sure if I'll actually use the full Redux machinery, or if I'll settle for just local state.
+//// We are going FULL REDUX FTGE.
+/* ACTIONS TO HANDLE
+ * NEWHAND (newDealer)
+    * Toggle which player is dealer and gets the crib
+    * Initialize each player's hand to 6 cards, crib to 0, empty the list of played cards, and reset running total to 0.
+ * SENDCARDSTOCRIB (player, cards)
+    * Transfer cards from one player's hand to the crib
+    * If both players have passed cards over, turn up deck for nobs and proceed to counting-up.
+        * Maybe also do something with an ADDPOINTS action, that takes a player, action, and score?
+ * PLAYCARD (player, card, (implicitly playedCards and running total))
+    * Move card from player's hand to playedCards, and add the value of that card to runningTotal.
+        * If this would score points, dispatch ADDPOINTS as appropriate
+        * If this would take the total to 31, reset total to 0, dispatch "points for 31" and continue play.
+        * If neither player has cards left, dispatch "last card" and proceed to the counting-up phase.
+ * ADDPOINTS(player, points, string description?)
+*/
+
 //// -----------------
 //// ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 //// They do not themselves have any side-effects; they just describe something that is going to happen.
