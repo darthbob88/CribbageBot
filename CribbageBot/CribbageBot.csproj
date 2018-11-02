@@ -24,14 +24,14 @@
     <None Remove="ClientApp\components\Cribbage.tsx" />
     <None Remove="ClientApp\components\CribbageBoard.tsx" />
     <None Remove="ClientApp\components\CribbagePlayArea.tsx" />
-    <None Remove="ClientApp\store\Player.ts" />
+    <None Remove="ClientApp\store\Cribbage.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Cribbage.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CribbageBoard.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CribbagePlayArea.tsx" />
-    <TypeScriptCompile Include="ClientApp\store\Player.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Cribbage.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

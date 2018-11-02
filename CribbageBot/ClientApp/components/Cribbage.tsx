@@ -2,17 +2,20 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { CribbagePlayArea } from './CribbagePlayArea';
 import { CribbageBoard } from './CribbageBoard';
-import { GameState, Player } from '../store/Player';
+import { connect } from 'react-redux';
+import { ApplicationState } from '../store';
+import * as CribbageStore from '../store/Cribbage';
+
 
 type CribbageProps =
-    GameState
+    CribbageStore.GameState
     //& typeof CounterStore.actionCreators
     & RouteComponentProps<{}>;
 
-export default class Cribbage extends React.Component<CribbageProps, {}> {
-    defaultPlayer: Player = { id: "Boris", score: 0, cardsInCrib: [], cardsInHand: [] };
-    state: GameState = {
-        players: [this.defaultPlayer, { id: "Albert", score: 0, cardsInCrib: [], cardsInHand: [] }],
+class Cribbage extends React.Component<CribbageProps, {}> {
+    defaultPlayer: CribbageStore.Player = { id: "Boris", score: 0 };
+    state: CribbageStore.GameState = {
+        players: [this.defaultPlayer, { id: "Albert", score: 0}],
         dealer: this.defaultPlayer
     }
     public render() {
@@ -23,3 +26,10 @@ export default class Cribbage extends React.Component<CribbageProps, {}> {
         </div>;
     }
 }
+
+
+// Wire up the React component to the Redux store
+export default connect(
+    (state: ApplicationState) => state.counter, // Selects which state properties are merged into the component's props
+    CribbageStore.actionCreators                 // Selects which action creators are merged into the component's props
+)(Cribbage) as typeof Cribbage;
